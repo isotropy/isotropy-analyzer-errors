@@ -1,4 +1,4 @@
-import { parse } from "chimpanzee";
+import { parse, Match, Empty } from "chimpanzee";
 
 export default function canParse(schema, obj) {
   const result = parse(schema)(obj)();
