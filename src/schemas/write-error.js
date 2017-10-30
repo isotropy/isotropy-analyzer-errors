@@ -1,7 +1,7 @@
 import { any, Match, Skip, Fault } from "chimpanzee";
 import { source, composite } from "isotropy-analyzer-utils";
 
-export default function(root) {
+export default function(root, message) {
   function recurseToParentFromMember(state, analysisState) {
     return composite({
       type: "MemberExpression",
@@ -36,7 +36,7 @@ export default function(root) {
         build: obj => () => result =>
           result instanceof Match
             ? new Fault(
-                `Unable to parse KeyValueDB write expression. Refer to documentation.`
+                message
               )
             : result
       }

@@ -1,7 +1,7 @@
 import { any, Match, Skip, Fault, wrap } from "chimpanzee";
 import { source, composite } from "isotropy-analyzer-utils";
 
-export default function(root) {
+export default function(root, message) {
   function recurseToParentFromMember(state, analysisState) {
     return composite({
       type: "MemberExpression",
@@ -29,11 +29,7 @@ export default function(root) {
   return function(state, analysisState) {
     return wrap(recurseToParent(state, analysisState), {
       build: obj => () => result =>
-        result instanceof Match
-          ? new Fault(
-              `Unable to parse KeyValueDB read expression. Refer to documentation.`
-            )
-          : result
+        result instanceof Match ? new Fault(message) : result
     });
   };
 }
